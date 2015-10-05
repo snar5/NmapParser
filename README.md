@@ -11,8 +11,8 @@ This program includes some code from Alton Johnson 's Nmap parser
                   colors.py     a simple colors class
                   nmapsort.py   the parser engine
                   nmapparser.py this file
-        Usage:
-                python nmapparser.py sample.xml
+USAGE:
+      python nmapparser.py sample.xml
 
 OPTIONS 
 
@@ -27,19 +27,13 @@ OPTIONS
 
 SAMPLE USAGE :
 
-Scanning File:  sample.xml
-
- ------------------------------------------------------------------------
   Command Line XML Parser 
- ------------------------------------------------------------------------
  
 Enter option (type 'h' for help, 'q' to quit)
-"""
-#nmcmd:> sort
 
- +----------------+-------+-------------------------------+
+#nmcmd:> sort
+ ==========================================================
  | IP Address     | Port  | Service                       |
- +----------------+-------+-------------------------------+
  | 192.168.6.1    | 2105  | AOLserver httpd               |
  | 192.168.6.1    | 22    | OpenSSH                       |
  | 192.168.6.1    | 2525  | Sendmail                      |
@@ -49,17 +43,15 @@ Enter option (type 'h' for help, 'q' to quit)
  | 192.168.6.1    | 53    | ISC BIND                      |
  | 192.168.6.1    | 8086  | Squid webproxy                |
  | 192.168.6.1    | 8088  | Squid webproxy                |
- +----------------+-------+-------------------------------+
+ ==========================================================
  | 192.168.6.155  | 1066  | Microsoft Windows RPC         |
  | 192.168.6.155  | 1110  | Microsoft Windows RPC         |
  | 192.168.6.155  | 1137  | Microsoft Windows RPC         |
  | 192.168.6.155  | 135   | Microsoft Windows RPC         |
  | 192.168.6.155  | 902   | VMware Authentication Daemon  |
  | 192.168.6.155  | 912   | VMware Authentication Daemon  |
- +----------------+-------+-------------------------------+
  | 192.168.6.200  | 8080  | Burp Suite Pro http proxy     |
- +----------------+-------+-------------------------------+
+ ==========================================================
 
 Enter option (type 'h' for help, 'q' to quit)
-#nmcmd:>      <-- Enter Command Here  
-"""
+#nmcmd:>     
