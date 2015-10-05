@@ -25,13 +25,6 @@ OPTIONS
    h			 Displays this screen
    q			 Quit Program
 
-SAMPLE USAGE :
-
-  Command Line XML Parser 
- 
-Enter option (type 'h' for help, 'q' to quit)
-
-#nmcmd:> sort
  ==========================================================
  | IP Address     | Port  | Service                       |
  | 192.168.6.1    | 2105  | AOLserver httpd               |
@@ -52,6 +45,5 @@ Enter option (type 'h' for help, 'q' to quit)
  | 192.168.6.155  | 912   | VMware Authentication Daemon  |
  | 192.168.6.200  | 8080  | Burp Suite Pro http proxy     |
  ==========================================================
-
 Enter option (type 'h' for help, 'q' to quit)
-#nmcmd:>     
+nmcmd:>     
