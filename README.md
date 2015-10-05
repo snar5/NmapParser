@@ -34,6 +34,7 @@ Scanning File:  sample.xml
  ------------------------------------------------------------------------
  
 Enter option (type 'h' for help, 'q' to quit)
+"""
 #nmcmd:> sort
 
  +----------------+-------+-------------------------------+
@@ -61,4 +62,4 @@ Enter option (type 'h' for help, 'q' to quit)
 
 Enter option (type 'h' for help, 'q' to quit)
 #nmcmd:>      <-- Enter Command Here  
-
+"""
