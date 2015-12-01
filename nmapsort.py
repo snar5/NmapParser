@@ -110,6 +110,18 @@ class NmapSortClass():
 				displaylist.append([key,port,version])	
 	return displaylist
 
+     #------ Return Unique Ports ----------------
+     def uniquePorts(self):
+	portlist = []
+	uniqlist = []	
+	for key in self._HostDictionary['device']:
+       	       for port,version in self._HostDictionary['device'][key].items():
+               	        portlist.append(port)
+	uniqlist=set(portlist)
+	return uniqlist
+
+
+
      # -------- Search By Text -----------	
      def displayTextSearch(self,in_text): 
 	displaylist = []

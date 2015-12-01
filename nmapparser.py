@@ -54,6 +54,7 @@ def optionshelp(err=None):
 	print '   file\t\t\t Make a file based on port selected' 
 	print '   text\t\t\t Search Version Information ' 
 	print '   h\t\t\t Displays this screen'
+	print '   portlist\t\t unique ports list'
 	print '   q\t\t\t Quit Program'  
 
 	
@@ -84,6 +85,8 @@ def main ():
 				makefile()
 			elif options[0] =='text':
 				txtsearch()
+			elif options[0] =='portlist':
+				listports()
 			elif options[0] == 'capture':
 				capture()
 	# System Commands ------------------------------------------------
@@ -161,6 +164,17 @@ def sort(port=None):
 			print_to_screen(data)
 		else:
 			print colors.red + '>> No ports retreived <<' + colors.normal 
+def listports():
+	data = nm.uniquePorts()
+	print 'Unique Port List for Nmap Results:\n'
+
+	if len(data) > 0:
+		for port in data:
+			print port
+		print 
+	else:
+		print colors.red + '>> Error Getting List <<' + colors.normal 
+
 def getip(ipaddr=None):
 	os.system('clear')
 	print ''
