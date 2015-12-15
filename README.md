@@ -14,20 +14,3 @@ Package files
 ## USAGE: ##
       python nmapparser.py sample.xml
 
-OPTIONS 
-
-sort		 Sort Entire List
-
-ip <ip address>	 Select Individual IP address
-
-port <port Number>	 Enter port Number to filter on
-
-file		 Make a file based on port selected
-
-text		 Search Version Information 
-
-count		 Count of IPs found
-
-export		 Export entire list to file
-
-
