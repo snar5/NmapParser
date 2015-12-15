@@ -3,9 +3,10 @@
 	Description: Command Line Nmap Parser for valid XML results from an nmap scan. 
 		    This program is based on (and includes some code from) Alton Johnson 's Nmap parser
 		     
-	Author: mark thorburn (markt@tracesecurity) 
+	Author: mark thorburn (snar5) 
 	Created: 07/17/2013
 	Updated: 07/28/2014 -- Added Text Search  Option 
+	Updated: 12/15/2015 -- Added Total Count, display IPs and Export to file 
 
 	Package files
 		  sample.xml	a sample XML file to test with 
@@ -48,14 +49,16 @@ def optionshelp(err=None):
 		print ''
 	print ' ----------------------------------------'
 	print ' Option - Command '
-	print '   sort\t\t\t Sort Entire List '
-	print '   ip <ip address>\t Select Individual IP address'
-	print '   port <port Number>\t Enter port Number to filter on'
-	print '   file\t\t\t Make a file based on port selected' 
-	print '   text\t\t\t Search Version Information ' 
-	print '   h\t\t\t Displays this screen'
-	print '   portlist\t\t unique ports list'
-	print '   q\t\t\t Quit Program'  
+	print '   .sort\t\t Sort Entire List '
+	print '   .ip <ip address>\t Select Individual IP address'
+	print '   .port <port Number>\t Enter port Number to filter on'
+	print '   .file\t\t Make a file based on port selected' 
+	print '   .text\t\t Search Version Information ' 
+	print '   .help\t\t Displays this screen'
+	print '   .portlist\t\t unique ports list'
+	print '   .count\t\t Return Number of IPs'
+	print '   .export\t\t Export results to file'
+	print '   .quit\t\t Quit Program'  
 
 	
 def main ():
@@ -69,37 +72,39 @@ def main ():
 		scanfile(xmlfile)
 	print banner
 	while not option == 'q':
-		print "Enter option (type 'h' for help, 'q' to quit)"
+		print "Enter option (type '.help' for help, '.quit' to quit)"
 		options = shlex.split(raw_input('#nmcmd:> '))
 		try:
 			if len(options[0]) < 1:
 				optionshelp()
-			elif options[0] == 'sort':
+			elif options[0] == '.sort':
 				sort(port)
-			elif options[0] == 'ip':
+			elif options[0] == '.ip':
 				getip(options[1])
-			elif options[0] == 'port':
+			elif options[0] == '.port':
 				if len(options[1]) > 0:
 					sort(options[1])	
-			elif options[0] =='file':
+			elif options[0] =='.file':
 				makefile()
-			elif options[0] =='text':
+			elif options[0] =='.text':
 				txtsearch()
-			elif options[0] =='portlist':
+			elif options[0] =='.portlist':
 				listports()
-			elif options[0] == 'capture':
-				capture()
+			elif options[0] == '.export':
+				export()
+			elif options[0] == '.count':
+				count()
 	# System Commands ------------------------------------------------
 			elif options[0] == 'ls':
 				os.system('clear;ls -l')
 				print 
-			elif options[0] == 'h':
+			elif options[0] == '.help':
 				optionshelp()
-			elif options[0] == 'pwd':
+			elif options[0] == '.pwd':
 				os.system('clear;pwd')
-			elif options[0] =='clear':
+			elif options[0] =='.clear':
 				os.system('clear')
-			elif options[0] =='q':
+			elif options[0] =='.quit':
 				exit()
 			else:
 				optionshelp(options[0])	
@@ -137,14 +142,21 @@ def makefile(portnumber=None):
 		print ''
 	else:
 		print colors.red + ' No file created as no ip was found with port ' + portnumber + colors.normal 
-def capture():
-	if len(data) > 0:
+def export():
+	data =[]
+	scandata = nm.displayPorts()
+	if len(scandata) > 0:
 		filename = raw_input('Save File as: ')
 		target = open(filename,'w')
 	 	target.truncate()
-		for ip in data:
-			target.write(str(ip[0] + ' ' + ip[1] + ' ' + ip[2] + '\n'))
+		for ip_addr in sorted(scandata):
+			for portkey,values in sorted(scandata[ip_addr].items()):
+				target.write(str(ip_addr) + ' ' + str(portkey) + ' ' + str(values) + '\n')
+				
 		target.close()	
+def count():
+	data = nm.displayPorts()
+	print len(data)
 
 def sort(port=None):
 
