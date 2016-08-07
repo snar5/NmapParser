@@ -6,7 +6,8 @@
 	Author: mark thorburn (snar5) 
 	Created: 07/17/2013
 	Updated: 07/28/2014 -- Added Text Search  Option 
-	Updated: 12/15/2015 -- Added Total Count, display IPs and Export to file 
+	Updated: 12/15/2015 -- Added Total Count, display IPs and Export to file
+        Updated: 08/06/2016 -- Make all Files
 
 	Package files
 		  sample.xml	a sample XML file to test with 
@@ -58,6 +59,7 @@ def optionshelp(err=None):
 	print '   .portlist\t\t unique ports list'
 	print '   .count\t\t Return Number of IPs'
 	print '   .export\t\t Export results to file'
+        print '   .makeall\t\t Make a file for each port'
 	print '   .quit\t\t Quit Program'  
 
 	
@@ -94,6 +96,9 @@ def main ():
 				export()
 			elif options[0] == '.count':
 				count()
+                        elif options[0] == '.makeall':
+                                makefiles()
+
 	# System Commands ------------------------------------------------
 			elif options[0] == 'ls':
 				os.system('clear;ls -l')
@@ -122,6 +127,9 @@ def scanfile(xmlfile):
 		exit()
 	
 def makefile(portnumber=None):
+        #
+        # Make a file for the selected port 
+        # 
 	portnumber = raw_input('Create file for port? ')
 	if len(portnumber) < 1:
 		return
@@ -141,7 +149,30 @@ def makefile(portnumber=None):
 		print colors.blue + 'File: ' + filename + ' created.' + colors.normal
 		print ''
 	else:
-		print colors.red + ' No file created as no ip was found with port ' + portnumber + colors.normal 
+		print colors.red + ' No file created as no ip was found with port ' + portnumber + colors.normal
+
+def makefiles():
+    #
+    # Make a file for each port  
+    #
+    directory = "ports"
+    ports = nm.uniquePorts()
+    if len(ports) < 1:
+       return
+    data = []
+    for port in ports:
+        data = nm.displaySinglePort(port)
+        if not os.path.exists(directory):
+                os.makedirs(directory)
+        filename = 'ports/' + str(port) + ".port.txt"
+        target = open (filename, 'w')
+        target.truncate()
+        for ip in data:
+            target.write(str(ip[0] +'\n'))
+        target.close()
+
+
+
 def export():
 	data =[]
 	scandata = nm.displayPorts()
