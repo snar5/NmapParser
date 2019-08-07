@@ -98,6 +98,8 @@ def main ():
 				count()
                         elif options[0] == '.makeall':
                                 makefiles()
+			elif options[0] == '.summary':
+				scanSummary()
 
 	# System Commands ------------------------------------------------
 			elif options[0] == 'ls':
@@ -123,6 +125,8 @@ def scanfile(xmlfile):
 		nm.scanFile(xmlfile[0])
 	except Exception, err:
 		print 'Error Reading File ', xmlfile[0]
+		print 'Error from file:'
+		print err
 		print colors.blue + 'The progam will now exit.' + colors.normal
 		exit()
 	
@@ -237,6 +241,42 @@ def txtsearch():
 		print_to_screen(data)
 	else:
 		print colors.red + '>> No results retreived <<' + colors.normal
+###
+# Print Summary for Neat Reporting 
+###
+def scanSummary():
+	scanSummary = nm.getScanCommand() 
+	scanTime = nm.getScanTime()
+	scanScanType = nm.getScanType()
+	scanScanInfo = nm.getScanInfo() 
+	scanFileName = nm.getFilename() 
+	scanHostsup = nm.getHosts()
+	scanAllHosts = nm.getHostsall() 
+	ports = nm.uniquePorts()
+	data =[]
+ 	portString = ''
+	if len(ports) > 0:
+		for ip in ports:
+			portString = portString + ip + ","
+	else:
+        	portString = "No Ports" 
+
+		
+	os.system('clear')
+	print "+--------------------------------------------------+"
+	print "Network Scan Summary:\n"
+	print "Nmap Run Start: " + colors.green + nm.getScanTime() + colors.normal 
+	print "Nmap Run End: " + colors.green + nm.getEndTime() + colors.normal
+	print "Nmap ScanType: " + colors.green + scanScanType + colors.normal
+	print "Hosts Found: " + colors.green + scanHostsup + colors.normal + " out of: " + colors.green + scanAllHosts + colors.normal + " hosts" 
+	print "Nmap Command: " + colors.green + scanSummary + colors.normal 
+	print "Unique Ports Discovered:"
+	print colors.green +  portString + colors.normal
+	print "+--------------------------------------------------+"
+	print 	
+###
+# Print to Screen (display results) 
+###
 
 def print_to_screen(data):
 	#grab offset

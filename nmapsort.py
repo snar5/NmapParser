@@ -37,9 +37,13 @@ class NmapSortClass():
        scanFilename = filename 
        scanType = dom.getElementsByTagName('scaninfo')[0].getAttributeNode('protocol').value
        scanTime = dom.getElementsByTagName('nmaprun')[0].getAttributeNode('startstr').value
+       for stats in dom.getElementsByTagName('runstats'):
+       	 scanEndTime = stats.getElementsByTagName('finished')[0].getAttributeNode('timestr').value
+       scanHosts = dom.getElementsByTagName('hosts')[0].getAttributeNode('up').value
        scanCommand = dom.getElementsByTagName('nmaprun')[0].getAttributeNode('args').value
-       self._ScanInfo = {'filename':scanFilename,'scanType':scanType,'scanTime':scanTime,'scanCommand':scanCommand}
-
+       scanHostsall = dom.getElementsByTagName('hosts')[0].getAttributeNode('total').value
+       self._ScanInfo = {'filename':scanFilename,'scanType':scanType,'scanTime':scanTime,'scanCommand':scanCommand,'scanEndTime':scanEndTime,'scanHosts':scanHosts,'scanHostsall':scanHostsall}
+      
         # -- Start Host --
        for dhost in dom.getElementsByTagName('host'):     
 	   hostip = ''        
@@ -89,11 +93,18 @@ class NmapSortClass():
 	return self._ScanInfo['scanTime']
      def getScanCommand(self):
 	return self._ScanInfo['scanCommand']
+     def getFilename(self):
+	return self._ScanInfo['filename']
+     def getEndTime(self):
+	return self._ScanInfo['scanEndTime']
+     def getHosts(self):
+	return self._ScanInfo['scanHosts']
+     def getHostsall(self):
+	return self._ScanInfo['scanHostsall']
 
       # -- Functions to Return Results in different formats  -- 
      def displayPorts(self):
 	return self._HostDictionary['device']
-
      def displayIpByPort(self):
 	p = defaultdict(list)
 	for key in self._HostDictionary['device']:
